@@ -7,34 +7,41 @@
 
 ---
 
-## 📋 Sobre o Projeto
+## Documentação
 
-O **Kleber AI** é um assistente pessoal inteligente que centraliza 
-ferramentas de produtividade em uma única interface, potencializado 
+1. [Arquitetura da Solução](docs/architecture.md)
+2. [Fluxo da Aplicação](docs/flow.md)
+
+---
+
+## Sobre o Projeto
+
+O **Kleber AI** é um assistente pessoal inteligente que centraliza
+ferramentas de produtividade em uma única interface, potencializado
 pela API do Google Gemini.
 
-Pensado para organizar rotina, tarefas, finanças e bem-estar de forma 
-natural e integrada, o Kleber conecta diversas ferramentas e APIs 
+Pensado para organizar rotina, tarefas, finanças e bem-estar de forma
+natural e integrada, o Kleber conecta diversas ferramentas e APIs
 externas, sendo controlado por linguagem natural.
 
 ---
 
-## 🛠️ Funcionalidades
+## Funcionalidades
 
 ### Produtividade
-- 📅 **Calendário** → Integração com Google Calendar
-- ✅ **Todo List** → Integração com Todoist
-- 📝 **Notas Rápidas** → Integração com Notion
-- ⏱️ **Pomodoro** → Timer próprio integrado ao sistema
+- Calendário → Integração com Google Calendar
+- Todo List → Integração com Todoist
+- Notas Rápidas → Integração com Notion
+- Pomodoro → Timer próprio integrado ao sistema
 
 ### Organização Pessoal
-- 💰 **Financeiro** → Controle via Notion
-- 🎮 **Gamificação** → Integração com Habitica
-- 🥗 **Dieta** → Controle manual (sem API pública disponível)
+- Financeiro → Controle via Notion
+- Gamificação → Integração com Habitica
+- Dieta → Controle manual (sem API pública disponível)
 
 ---
 
-## 🚀 Tecnologias
+## Tecnologias
 
 ### Frontend
 - [React](https://react.dev/) + [Vite](https://vitejs.dev/)
@@ -45,7 +52,7 @@ externas, sendo controlado por linguagem natural.
 - [Python](https://www.python.org/)
 - [FastAPI](https://fastapi.tiangolo.com/)
 
-### IA & Serviços
+### IA e Serviços
 - [Google Gemini API](https://ai.google.dev/)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli)
 
@@ -61,7 +68,7 @@ externas, sendo controlado por linguagem natural.
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 ### Fase 1 - Fundação
 - [x] Criação do repositório
@@ -69,7 +76,7 @@ externas, sendo controlado por linguagem natural.
 - [x] Estrutura inicial Frontend (React + Vite + TypeScript)
 - [x] Estrutura inicial Backend (Python + FastAPI)
 - [x] Configuração do Gemini CLI
-- [ ] Documentação base (docs/)
+- [x] Documentação base (docs/)
 
 ### Fase 2 - MVP
 - [ ] Interface do chat (UI)
@@ -97,10 +104,11 @@ externas, sendo controlado por linguagem natural.
 
 ---
 
-## 🛠️ Instruções de Utilização
+## Instruções de Utilização
 
 > Assim que a primeira versão estiver disponível, as instruções serão complementadas.
 
 ### Pré-requisitos
-```bash
-# Em breve
+- Node.js
+- Python 3.11+
+- Docker
