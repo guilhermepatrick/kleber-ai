@@ -3,18 +3,34 @@
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 ![Tech](https://img.shields.io/badge/stack-React%20%7C%20Python%20%7C%20Gemini%20AI-blue)
 
-> Assistente de atendimento inteligente com IA generativa para consultórios e pequenas empresas.
+> Assistente pessoal inteligente com IA generativa para produtividade e organização do dia a dia.
 
 ---
 
 ## 📋 Sobre o Projeto
 
-O **Kleber AI** é um chatbot de atendimento inteligente desenvolvido para automatizar
-e humanizar o primeiro contato com clientes de consultórios e pequenas empresas.
+O **Kleber AI** é um assistente pessoal inteligente que centraliza 
+ferramentas de produtividade em uma única interface, potencializado 
+pela API do Google Gemini.
 
-Utilizando a API do Google Gemini, o Kleber é capaz de responder dúvidas frequentes,
-realizar agendamentos e direcionar o usuário de forma natural e eficiente,
-reduzindo a carga operacional da equipe de atendimento.
+Pensado para organizar rotina, tarefas, finanças e bem-estar de forma 
+natural e integrada, o Kleber conecta diversas ferramentas e APIs 
+externas, sendo controlado por linguagem natural.
+
+---
+
+## 🛠️ Funcionalidades
+
+### Produtividade
+- 📅 **Calendário** → Integração com Google Calendar
+- ✅ **Todo List** → Integração com Todoist
+- 📝 **Notas Rápidas** → Integração com Notion
+- ⏱️ **Pomodoro** → Timer próprio integrado ao sistema
+
+### Organização Pessoal
+- 💰 **Financeiro** → Controle via Notion
+- 🎮 **Gamificação** → Integração com Habitica
+- 🥗 **Dieta** → Controle manual (sem API pública disponível)
 
 ---
 
@@ -32,6 +48,12 @@ reduzindo a carga operacional da equipe de atendimento.
 ### IA & Serviços
 - [Google Gemini API](https://ai.google.dev/)
 - [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+
+### Integrações
+- [Google Calendar API](https://developers.google.com/calendar)
+- [Todoist API](https://developer.todoist.com/)
+- [Notion API](https://developers.notion.com/)
+- [Habitica API](https://habitica.com/apidoc/)
 
 ### Infraestrutura
 - [Docker](https://www.docker.com/)
@@ -54,19 +76,18 @@ reduzindo a carga operacional da equipe de atendimento.
 - [ ] Integração Frontend ↔ Backend
 - [ ] Integração com API do Gemini
 - [ ] Fluxo básico de conversa
-- [ ] Configuração de personalidade do bot
+- [ ] Timer Pomodoro
 
-### Fase 3 - Funcionalidades
-- [ ] Sistema de contexto e memória de conversa
-- [ ] Painel de configuração do bot
-- [ ] Respostas baseadas em base de conhecimento
-- [ ] Histórico de conversas
+### Fase 3 - Integrações
+- [ ] Google Calendar
+- [ ] Todoist
+- [ ] Notion (Notas + Financeiro)
+- [ ] Habitica
 
 ### Fase 4 - Qualidade
 - [ ] Testes unitários (Frontend)
 - [ ] Testes unitários (Backend)
 - [ ] Testes de integração
-- [ ] Testes de sistema
 
 ### Fase 5 - Deploy
 - [ ] Configuração Docker
