@@ -1,121 +1,75 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
+const SCOPE = 'https://www.googleapis.com/auth/drive.readonly'
+
+export default function App() {
+  const [status, setStatus] = useState('')
+  const [result, setResult] = useState('')
+
+  function openDrivePicker() {
+    const tokenClient = (window as any).google.accounts.oauth2.initTokenClient({
+      client_id: CLIENT_ID,
+      scope: SCOPE,
+      callback: (tokenResponse: any) => {
+        const gapi = (window as any).gapi
+        gapi.load('picker', () => {
+          const google = (window as any).google
+          const picker = new google.picker.PickerBuilder()
+            .addView(google.picker.ViewId.DOCS)
+            .setOAuthToken(tokenResponse.access_token)
+            .setCallback((data: any) => {
+              if (data.action === 'picked') {
+                const file = data.docs[0]
+                handleFile(file.id, file.name, tokenResponse.access_token)
+              }
+            })
+            .build()
+          picker.setVisible(true)
+        })
+      },
+    })
+    tokenClient.requestAccessToken()
+  }
+
+  async function handleFile(fileId: string, fileName: string, token: string) {
+    setStatus(`Baixando "${fileName}"...`)
+    setResult('')
+
+    const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    const blob = await res.blob()
+
+    const formData = new FormData()
+    formData.append('file', blob, fileName)
+
+    setStatus('Transcrevendo...')
+    const transcribeRes = await fetch('http://localhost:8000/transcribe', {
+      method: 'POST',
+      body: formData,
+    })
+    const { transcription, txt_path } = await transcribeRes.json()
+
+    setStatus('')
+    setResult(`Transcrição concluída!\n\nArquivo salvo em:\n${txt_path}\n\n---\n\n${transcription}`)
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div style={{ maxWidth: 800, margin: '40px auto', padding: '0 20px', fontFamily: 'sans-serif' }}>
+      <h1>Kleber AI — Análise de Reuniões</h1>
 
-      <div className="ticks"></div>
+      <button onClick={openDrivePicker} style={{ padding: '10px 20px', fontSize: 16, cursor: 'pointer' }}>
+        Selecionar arquivo do Google Drive
+      </button>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {status && <p style={{ marginTop: 20, color: '#555' }}>{status}</p>}
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      {result && (
+        <pre style={{ marginTop: 20, whiteSpace: 'pre-wrap', background: '#f5f5f5', padding: 20, borderRadius: 8 }}>
+          {result}
+        </pre>
+      )}
+    </div>
   )
 }
-
-export default App
